@@ -10,10 +10,6 @@ import Checkbox from '@mui/material/Checkbox';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import Favorite from '@mui/icons-material/Favorite';
 
-
-
-
-
 export const Todolist: React.FC<TodolistPropsType> = ({
                                                           title,
                                                           tasks,
@@ -81,7 +77,7 @@ export const Todolist: React.FC<TodolistPropsType> = ({
             </h3>
             <AddItemForm addItem={addTaskHandler}/>
             <ul>
-                {tasks.map(el => {
+                {tasks?.map(el => {
                     return (
                         <li key={el.id} className={el.isImportant ? 'important-task' : el.isDone ? 'is-done' : ''}>
                             {/*<input onChange={(event) => changeCheckboxStatusHandler(todolistId, el.id, event)}*/}
