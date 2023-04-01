@@ -1,6 +1,6 @@
 import {TasksStateType} from "../Typisation";
 import {v1} from "uuid";
-
+import {AddNewTodolistActionType, RemoveTodolistActionType} from "./todolists-reducer";
 
 export const TasksReducer = (state: TasksStateType, action: ActionType): TasksStateType => {
     switch (action.type) {
@@ -41,8 +41,13 @@ export const TasksReducer = (state: TasksStateType, action: ActionType): TasksSt
                 } : el)
             };
         }
-        case "ADD-EMPTY-ARRAY-TO-NEW-TODO": {
-            return {...state, [action.payload.todolistId]: []};
+        case "ADD-NEW-TODOLIST": {
+            return {...state, [action.payload.todolistId]: []}
+        }
+        case "REMOVE-TODOLIST": {
+            const copyState = {...state}
+            delete copyState[action.payload.todolistId]
+            return copyState
         }
         default:
             return state
@@ -55,7 +60,8 @@ export type ActionType =
     | ReturnType<typeof changeCheckboxStatusAC>
     | ReturnType<typeof isImportantTaskAC>
     | ReturnType<typeof updateTaskTitleAC>
-    | ReturnType<typeof addEmptyArrayToNewTodotAC>
+    | AddNewTodolistActionType
+    | RemoveTodolistActionType
 
 export const removeTaskAC = (todolistId: string, taskId: string) => {
     return {
@@ -106,14 +112,6 @@ export const updateTaskTitleAC = (todolistId: string, taskId: string, newTitle: 
             todolistId,
             taskId,
             newTitle,
-        }
-    } as const
-}
-export const addEmptyArrayToNewTodotAC = (todolistId: string) => {
-    return {
-        type: "ADD-EMPTY-ARRAY-TO-NEW-TODO",
-        payload: {
-            todolistId,
         }
     } as const
 }

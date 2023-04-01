@@ -5,7 +5,6 @@ import {v1} from "uuid";
 import {FilterType, TasksStateType, TaskType, TodolistsType} from "./Typisation";
 import {AddItemForm} from "./components/AddItemForm/AddItemForm";
 import {
-    addEmptyArrayToNewTodotAC,
     addTaskAC,
     changeCheckboxStatusAC,
     isImportantTaskAC,
@@ -76,17 +75,18 @@ function App() {
 
     const removeTodolist = (todolistId: string) => {
         dispatchTodolists(removeTodolistAC(todolistId))
-        delete tasks[todolistId]
+        dispatchTasks(removeTodolistAC(todolistId))
+        // delete tasks[todolistId]
         // setTasks({...tasks})
     }
 
     const addNewTodolist = (titleValue: string) => {
-        const todolistId = v1();
         // const newTodolist: TodolistsType = {id: todolistId, title: titleValue, filter: 'all'}
         // setTodolists([newTodolist, ...todolists])
-        dispatchTodolists(addNewTodolistAC(titleValue, todolistId))
+        dispatchTodolists(addNewTodolistAC(titleValue))
         // setTasks({...tasks, [todolistId]: []})
-        dispatchTasks(addEmptyArrayToNewTodotAC(todolistId))
+        dispatchTasks(addNewTodolistAC(titleValue))
+        // dispatchTasks(addEmptyArrayToNewTodotAC(todolistId))
     }
 
     const updateTaskTitle = (todolistId: string, taskId: string, newTitle: string) => {
