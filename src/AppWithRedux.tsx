@@ -18,40 +18,25 @@ import {
     TodolistsReducer,
     updateTodolistTitleAC
 } from "./state/todolists-reducer";
+import {useDispatch, useSelector} from "react-redux";
+import {AppRootState} from "./state/store";
 
-function App() {
+function AppWithRedux() {
 
-    const todolistID1 = v1()
-    const todolistID2 = v1()
-
-    const [todolists, dispatchTodolists] = useReducer(TodolistsReducer, [
-        {id: todolistID1, title: 'What to learn', filter: 'all'},
-        {id: todolistID2, title: 'What to buy', filter: 'all'},
-    ])
-
-    const [tasks, dispatchTasks] = useReducer(TasksReducer, {
-        [todolistID1]: [
-            {id: v1(), title: 'HTML&CSS', isDone: true, isImportant: false},
-            {id: v1(), title: 'JS', isDone: true, isImportant: false},
-            {id: v1(), title: 'ReactJS', isDone: false, isImportant: false},
-
-        ],
-        [todolistID2]: [
-            {id: v1(), title: 'Rest API', isDone: true, isImportant: false},
-            {id: v1(), title: 'GraphQL', isDone: false, isImportant: false},
-        ]
-    })
+    const dispatch = useDispatch()
+    const todolists = useSelector<AppRootState, Array<TodolistsType>>(state => state.todolists)
+    const tasks = useSelector<AppRootState, TasksStateType>(state => state.tasks)
 
     const removeTask = (todolistId: string, taskId: string) => {
         // setTasks({...tasks, [todolistId]: tasks[todolistId].filter(el => el.id !== taskId)});
-        dispatchTasks(removeTaskAC(todolistId, taskId))
+        dispatch(removeTaskAC(todolistId, taskId))
     }
 
     const addTask = (todolistId: string, newTitle: string) => {
         // const newTask = {id: v1(), title: newTitle, isDone: false, isImportant: false}
         // setTasks({...tasks, [todolistId]: [newTask, ...tasks[todolistId]]});
 
-        dispatchTasks(addTaskAC(todolistId, newTitle))
+        dispatch(addTaskAC(todolistId, newTitle))
     }
 
     const changeCheckboxStatus = (todolistId: string, taskId: string, checkboxValue: boolean) => {
@@ -59,11 +44,11 @@ function App() {
         //     ...tasks,
         //     [todolistId]: tasks[todolistId].map(el => el.id === taskId ? {...el, isDone: checkboxValue} : el)
         // });
-        dispatchTasks(changeCheckboxStatusAC(todolistId, taskId, checkboxValue))
+        dispatch(changeCheckboxStatusAC(todolistId, taskId, checkboxValue))
     }
 
     const changeFilterValue = (todolistId: string, filterValue: FilterType) => {
-        dispatchTodolists(changeFilterValueAC(todolistId, filterValue));
+        dispatch(changeFilterValueAC(todolistId, filterValue));
     }
 
     const isImportantTask = (todolistId: string, taskId: string, isImportantValue: boolean) => {
@@ -71,12 +56,12 @@ function App() {
         //     ...tasks,
         //     [todolistId]: tasks[todolistId].map(el => el.id === taskId ? {...el, isImportant: !isImportantValue} : el)
         // });
-        dispatchTasks(isImportantTaskAC(todolistId, taskId, !isImportantValue))
+        dispatch(isImportantTaskAC(todolistId, taskId, !isImportantValue))
     }
 
     const removeTodolist = (todolistId: string) => {
-        dispatchTodolists(removeTodolistAC(todolistId))
-        dispatchTasks(removeTodolistAC(todolistId))
+        dispatch(removeTodolistAC(todolistId))
+        dispatch(removeTodolistAC(todolistId))
         // delete tasks[todolistId]
         // setTasks({...tasks})
     }
@@ -85,10 +70,8 @@ function App() {
         // const newTodolist: TodolistsType = {id: todolistId, title: titleValue, filter: 'all'}
         // setTodolists([newTodolist, ...todolists])
         const action = addNewTodolistAC(titleValue)
-        dispatchTodolists(action)
+        dispatch(action)
         // setTasks({...tasks, [todolistId]: []})
-        dispatchTasks(action)
-
         // dispatchTasks(addEmptyArrayToNewTodotAC(todolistId))
     }
 
@@ -97,11 +80,11 @@ function App() {
         //     ...tasks,
         //     [todolistId]: tasks[todolistId].map(el => el.id === taskId ? {...el, title: newTitle} : el)
         // })
-        dispatchTasks(updateTaskTitleAC(todolistId, taskId, newTitle))
+        dispatch(updateTaskTitleAC(todolistId, taskId, newTitle))
     }
 
     const updateTodolistTitle = (todolistId: string, newTitle: string) => {
-        dispatchTodolists(updateTodolistTitleAC(todolistId, newTitle))
+        dispatch(updateTodolistTitleAC(todolistId, newTitle))
     }
 
     return (
@@ -142,4 +125,4 @@ function App() {
     );
 }
 
-export default App;
+export default AppWithRedux;

@@ -1,8 +1,29 @@
 import {TasksStateType} from "../Typisation";
 import {v1} from "uuid";
-import {AddNewTodolistActionType, RemoveTodolistActionType} from "./todolists-reducer";
+import {
+    AddNewTodolistActionType,
+    RemoveTodolistActionType,
+    // todolistID1,
+    // todolistID2,
+    TodolistsReducer
+} from "./todolists-reducer";
+import {useReducer} from "react";
 
-export const TasksReducer = (state: TasksStateType, action: ActionType): TasksStateType => {
+
+const initialState: TasksStateType = {
+    // [todolistID1]: [
+    //     {id: v1(), title: 'HTML&CSS', isDone: true, isImportant: false},
+    //     {id: v1(), title: 'JS', isDone: true, isImportant: false},
+    //     {id: v1(), title: 'ReactJS', isDone: false, isImportant: false},
+    //
+    // ],
+    // [todolistID2]: [
+    //     {id: v1(), title: 'Rest API', isDone: true, isImportant: false},
+    //     {id: v1(), title: 'GraphQL', isDone: false, isImportant: false},
+    // ]
+}
+
+export const TasksReducer = (state: TasksStateType = initialState, action: ActionType): TasksStateType => {
     switch (action.type) {
         case "REMOVE-TASK": {
             return {
@@ -12,6 +33,7 @@ export const TasksReducer = (state: TasksStateType, action: ActionType): TasksSt
         }
         case "ADD-TASK": {
             const newTask = {id: v1(), title: action.payload.newTitle, isDone: false, isImportant: false}
+
             return {...state, [action.payload.todolistId]: [newTask, ...state[action.payload.todolistId]]};
         }
         case "CHANGE-CHECKBOX-STATUS": {
@@ -74,6 +96,7 @@ export const removeTaskAC = (todolistId: string, taskId: string) => {
 }
 
 export const addTaskAC = (todolistId: string, newTitle: string) => {
+
     return {
         type: "ADD-TASK",
         payload: {
