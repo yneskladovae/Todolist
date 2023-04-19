@@ -1,8 +1,6 @@
-import React, {useReducer, useState} from 'react';
+import React from 'react';
 import './App.css';
-import {Todolist} from "./components/Todolist/Todolist";
-import {v1} from "uuid";
-import {FilterType, TasksStateType, TaskType, TodolistsType} from "./Typisation";
+import {FilterType, TodolistType} from "./Typisation";
 import {AddItemForm} from "./components/AddItemForm/AddItemForm";
 import {
     addTaskAC,
@@ -19,12 +17,12 @@ import {
 } from "./state/todolists-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "./state/store";
+import {TodolistWithRedux} from "./components/TodolistWithRedux/TodolistWithRedux";
 
 function AppWithRedux() {
-
     const dispatch = useDispatch()
-    const todolists = useSelector<AppRootState, Array<TodolistsType>>(state => state.todolists)
-    const tasks = useSelector<AppRootState, TasksStateType>(state => state.tasks)
+    const todolists = useSelector<AppRootState, Array<TodolistType>>(state => state.todolists)
+    // const tasks = useSelector<AppRootState, TasksStateType>(state => state.tasks)
 
     const removeTask = (todolistId: string, taskId: string) => {
         // setTasks({...tasks, [todolistId]: tasks[todolistId].filter(el => el.id !== taskId)});
@@ -88,34 +86,10 @@ function AppWithRedux() {
     return (
         <div className="App">
             <AddItemForm addItem={addNewTodolist}/>
-            {todolists?.map(el => {
-                const getFilteredTasks = (tasks: TaskType[], filter: FilterType): TaskType[] => {
-                    switch (filter) {
-                        case 'active' :
-                            return tasks.filter(task => !task.isDone)
-                        case "completed":
-                            return tasks.filter(task => task.isDone)
-                        default :
-                            return tasks
-                    }
-                }
-
-                const filterTasks: Array<TaskType> = getFilteredTasks(tasks[el.id], el.filter)
+            {todolists.map(el => {
                 return (
-                    <Todolist
-                        key={el.id}
-                        todolistId={el.id}
-                        title={el.title}
-                        tasks={filterTasks}
-                        removeTask={removeTask}
-                        addTask={addTask}
-                        changeFilterValue={changeFilterValue}
-                        changeCheckboxStatus={changeCheckboxStatus}
-                        isImportantTask={isImportantTask}
-                        removeTodolist={removeTodolist}
-                        updateTaskTitle={updateTaskTitle}
-                        updateTodolistTitle={updateTodolistTitle}
-                        filter={el.filter}
+                    <TodolistWithRedux
+                        todolist={el}
                     />
                 )
             })}

@@ -1,7 +1,7 @@
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import React, {ChangeEvent, useState, KeyboardEvent} from 'react';
-import {TodolistPropsType} from "../../Typisation";
+import {FilterType, TaskType, TodolistPropsType} from "../../Typisation";
 import {AddItemForm} from "../AddItemForm/AddItemForm";
 import {EditableSpan} from "../EditableSpan/EditableSpan";
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -10,7 +10,22 @@ import Checkbox from '@mui/material/Checkbox';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import Favorite from '@mui/icons-material/Favorite';
 
-export const Todolist: React.FC<TodolistPropsType> = ({
+export type TodolistType = {
+    todolistId: string
+    title: string
+    tasks: TaskType[]
+    removeTask: (todolistId: string, taskId: string) => void
+    addTask: (todolistId: string, newTitle: string) => void
+    changeFilterValue: (todolistId:string, filterValue: FilterType) => void
+    changeCheckboxStatus: (todolistId: string, taskId: string, checkboxValue: boolean) => void
+    filter: FilterType
+    isImportantTask:(todolistId: string, taskId: string, isImportantValue: boolean) => void
+    removeTodolist: (todolistId: string) => void
+    updateTaskTitle: (todolistId: string, taskId: string, newTitle: string) => void
+    updateTodolistTitle: (todolistId: string, newTitle: string) => void
+}
+
+export const Todolist: React.FC<TodolistType> = ({
                                                           title,
                                                           tasks,
                                                           removeTask,

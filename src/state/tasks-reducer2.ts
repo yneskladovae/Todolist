@@ -1,4 +1,4 @@
-import {TasksStateType, TodolistsType} from "../Typisation";
+import {TasksStateType, TodolistType} from "../Typisation";
 import {v1} from "uuid";
 
 export type RemoveTaskACType = ReturnType<typeof removeTaskAC>

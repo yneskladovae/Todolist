@@ -1,8 +1,8 @@
-import React, {useReducer, useState} from 'react';
+import React, {useReducer} from 'react';
 import './App.css';
 import {Todolist} from "./components/Todolist/Todolist";
 import {v1} from "uuid";
-import {FilterType, TasksStateType, TaskType, TodolistsType} from "./Typisation";
+import {FilterType, TaskType} from "./Typisation";
 import {AddItemForm} from "./components/AddItemForm/AddItemForm";
 import {
     addTaskAC,
@@ -18,6 +18,7 @@ import {
     TodolistsReducer,
     updateTodolistTitleAC
 } from "./state/todolists-reducer";
+import {TodolistWithRedux} from "./components/TodolistWithRedux/TodolistWithRedux";
 
 function App() {
 
