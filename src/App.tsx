@@ -75,8 +75,9 @@ function App() {
     }
 
     const removeTodolist = (todolistId: string) => {
-        dispatchTodolists(removeTodolistAC(todolistId))
-        dispatchTasks(removeTodolistAC(todolistId))
+        const action = removeTodolistAC(todolistId)
+        dispatchTodolists(action)
+        dispatchTasks(action)
         // delete tasks[todolistId]
         // setTasks({...tasks})
     }

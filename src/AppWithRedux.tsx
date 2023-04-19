@@ -9,13 +9,12 @@ import {
     changeCheckboxStatusAC,
     isImportantTaskAC,
     removeTaskAC,
-    TasksReducer, updateTaskTitleAC
+    updateTaskTitleAC
 } from "./state/tasks-reducer";
 import {
     addNewTodolistAC,
     changeFilterValueAC,
     removeTodolistAC,
-    TodolistsReducer,
     updateTodolistTitleAC
 } from "./state/todolists-reducer";
 import {useDispatch, useSelector} from "react-redux";
@@ -60,7 +59,6 @@ function AppWithRedux() {
     }
 
     const removeTodolist = (todolistId: string) => {
-        dispatch(removeTodolistAC(todolistId))
         dispatch(removeTodolistAC(todolistId))
         // delete tasks[todolistId]
         // setTasks({...tasks})
