@@ -1,6 +1,6 @@
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
-import React from 'react';
+import React, {memo, useCallback} from 'react';
 import {FilterType, TaskType, TodolistPropsType} from "../../Typisation";
 import {AddItemForm} from "../AddItemForm/AddItemForm";
 import {EditableSpan} from "../EditableSpan/EditableSpan";
@@ -20,7 +20,7 @@ import {
 } from "../../state/tasks-reducer";
 import {changeFilterValueAC, removeTodolistAC, updateTodolistTitleAC} from "../../state/todolists-reducer";
 
-export const TodolistWithRedux: React.FC<TodolistPropsType> = ({todolist}) => {
+export const TodolistWithRedux: React.FC<TodolistPropsType> = memo(({todolist}) => {
     const {id, title, filter} = todolist
     const tasks = useSelector<AppRootState, Array<TaskType>>(state => state.tasks[id])
     const dispatch = useDispatch()
@@ -29,9 +29,9 @@ export const TodolistWithRedux: React.FC<TodolistPropsType> = ({todolist}) => {
         dispatch(removeTaskAC(id, taskId));
     }
 
-    const addTaskHandler = (newTitle: string) => {
+    const addTaskHandler = useCallback((newTitle: string) => {
         dispatch(addTaskAC(id, newTitle))
-    }
+    }, [id])
 
     // const changeCheckboxStatusHandler = (id: string, taskId: string, e: ChangeEvent<HTMLInputElement>) => {
     //     dispatch(changeCheckboxStatusAC(id, taskId, e.currentTarget.checked))
@@ -111,4 +111,4 @@ export const TodolistWithRedux: React.FC<TodolistPropsType> = ({todolist}) => {
             </div>
         </div>
     );
-};
+});

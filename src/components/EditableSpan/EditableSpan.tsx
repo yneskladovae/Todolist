@@ -1,4 +1,4 @@
-import React, {useState, ChangeEvent, KeyboardEvent} from 'react';
+import React, {useState, ChangeEvent, KeyboardEvent, memo} from 'react';
 import {EditableSpanPropsType} from "../../Typisation";
 import CreateIcon from '@mui/icons-material/Create';
 import IconButton from "@mui/material/IconButton";
@@ -7,7 +7,9 @@ import AddBoxIcon from "@mui/icons-material/AddBox";
 import TextField from '@mui/material/TextField';
 
 
-export const EditableSpan: React.FC<EditableSpanPropsType> = ({oldTitle, callback}) => {
+export const EditableSpan: React.FC<EditableSpanPropsType> = memo(({oldTitle, callback}) => {
+    console.log('EditableSpan')
+
     const [editMode, setEditMode] = useState(false);
     const [newTitle, setNewTitle] = useState(oldTitle);
 
@@ -70,4 +72,4 @@ export const EditableSpan: React.FC<EditableSpanPropsType> = ({oldTitle, callbac
         }
     </>
 
-};
+});

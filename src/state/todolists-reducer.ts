@@ -50,9 +50,6 @@ export type ActionType =
     | AddNewTodolistActionType
     // | ReturnType<typeof addNewTodolistAC>
 
-
-
-
 export const changeFilterValueAC = (todolistId: string, filterValue: FilterType) => {
     return {
         type: "CHANGE-FILTER-VALUE",

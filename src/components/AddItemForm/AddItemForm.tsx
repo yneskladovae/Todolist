@@ -1,4 +1,4 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+import React, {ChangeEvent, KeyboardEvent, memo, useState} from 'react';
 import {AddItemFormPropsType} from "../../Typisation";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import IconButton from "@mui/material/IconButton";
@@ -7,7 +7,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
 
-export const AddItemForm: React.FC<AddItemFormPropsType> = ({addItem}) => {
+export const AddItemForm: React.FC<AddItemFormPropsType> = memo(({addItem}) => {
     const [inputValue, setInputValue] = useState('');
     const [error, setError] = useState<string | null>(null)
 
@@ -15,7 +15,8 @@ export const AddItemForm: React.FC<AddItemFormPropsType> = ({addItem}) => {
         if (inputValue.trim() !== '') {
             addItem(inputValue.trim())
             setInputValue('')
-            setError(null)
+            // setError(null)
+            if (error) setError(null)
         } else {
             setError('Title is required')
         }
@@ -27,7 +28,7 @@ export const AddItemForm: React.FC<AddItemFormPropsType> = ({addItem}) => {
     }
 
     const addTaskOnKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        setError(null)
+        if (error) setError(null)
         if (e.code === 'Enter' && inputValue.trim() !== '') {
             addItem(inputValue.trim())
             setInputValue('')
@@ -58,4 +59,4 @@ export const AddItemForm: React.FC<AddItemFormPropsType> = ({addItem}) => {
             {/*{error && <div className={'error-message '}>Title is required</div>}*/}
         </div>
     );
-};
+});

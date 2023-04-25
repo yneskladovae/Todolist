@@ -5,9 +5,7 @@ import {
     RemoveTodolistActionType,
     // todolistID1,
     // todolistID2,
-    TodolistsReducer
 } from "./todolists-reducer";
-import {useReducer} from "react";
 
 
 const initialState: TasksStateType = {
