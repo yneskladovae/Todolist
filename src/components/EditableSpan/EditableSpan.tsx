@@ -44,7 +44,6 @@ export const EditableSpan: React.FC<EditableSpanPropsType> = memo(({oldTitle, ca
     return <>
         {editMode
             ? <>
-                {/*<input value={newTitle} onBlur={activateViewMode} onChange={changeTitle} onKeyDown={addItemOnKeyDownHandler} autoFocus/>*/}
                 <TextField
                     value={newTitle}
                     onBlur={activateViewMode}
@@ -54,17 +53,12 @@ export const EditableSpan: React.FC<EditableSpanPropsType> = memo(({oldTitle, ca
                     id="standard-basic"
                     label="Text editing"
                     variant="standard" />
-                {/*<button onClick={addItem}>+</button>*/}
                 <IconButton onClick={addItem} aria-label="addItem" size="large"  style={{padding: '0px'}}>
                     <AddBoxIcon/>
                 </IconButton>
             </>
             : <>
                 <span onDoubleClick={activateEditMode}>{oldTitle}</span>
-                {/*<button onClick={activateEditMode}>*/}
-                {/*    &#9998;*/}
-                {/*</button>*/}
-
                 <IconButton onClick={activateEditMode} aria-label="edit" size="large" style={stylesForIcons}>
                     <CreateIcon />
                 </IconButton>

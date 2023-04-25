@@ -82,7 +82,6 @@ export const TodolistWithRedux: React.FC<TodolistPropsType> = memo(({todolist}) 
         <div>
             <h3>
                 <EditableSpan oldTitle={title} callback={(newTitle) => updateTodolistTitleHandler(newTitle)}/>
-                {/*<button onClick={removeTodolistHandler}>x</button>*/}
                 <IconButton onClick={removeTodolistHandler} aria-label="removeTodo" size="large" style={{padding: '3px', border: '1px solid #757575'}}>
                     <DeleteIcon/>
                 </IconButton>
